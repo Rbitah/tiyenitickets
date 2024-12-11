@@ -4,16 +4,16 @@ import { User } from './user.entity';
 
 @Entity()
 export class Wallet {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   balance: number;
 
-  @OneToMany(() => Transaction, transaction => transaction.wallet)
+  @OneToMany(() => Transaction, (transaction) => transaction.wallet)
   transactions: Transaction[];
 
-  @OneToOne(() => User, user => user.wallet)
+  @OneToOne(() => User, (user) => user.wallet, { cascade: true })
   @JoinColumn()
   user: User;
-} 
+}
